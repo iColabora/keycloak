@@ -128,12 +128,13 @@ public class LDAPUtils {
     // roles & groups
 
     public static LDAPObject createLDAPGroup(LDAPStorageProvider ldapProvider, String groupName, String groupNameAttribute, Collection<String> objectClasses,
-                                             String parentDn, Map<String, Set<String>> additionalAttributes) {
+                                             String parentDn, Map<String, Set<String>> additionalAttributes, String membershipLdapAttribute) {
         LDAPObject ldapObject = new LDAPObject();
 
         ldapObject.setRdnAttributeName(groupNameAttribute);
         ldapObject.setObjectClasses(objectClasses);
         ldapObject.setSingleAttribute(groupNameAttribute, groupName);
+        ldapObject.setSingleAttribute(membershipLdapAttribute, LDAPConstants.EMPTY_MEMBER_ATTRIBUTE_VALUE);
 
         LDAPDn roleDn = LDAPDn.fromString(parentDn);
         roleDn.addFirst(groupNameAttribute, groupName);
